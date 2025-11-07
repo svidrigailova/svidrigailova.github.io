@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Бабушка Бобра - Уютная кофейня</title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=e58b71cc-b61b-4d32-9a72-182953d084c0&lang=ru_RU" type="text/javascript"></script>
+    <style>
+        :root {
+            --primary-orange: #FF6B35;
+            --orange-light: #FF8C5A;
+            --orange-dark: #E55A2B;
+            --cream: #FFF9F0;
+            --warm-white: #FDF6F0;
+            --dark-brown: #2A1E15;
+            --medium-brown: #5D4037;
+            --light-brown: #8D6E63;
+            --accent-green: #27AE60;
+            --accent-yellow: #F2C94C;
+            --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Relief', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        body {
+            background-color: var(--cream);
+            color: var(--dark-brown);
+            line-height: 1.7;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-orange), var(--orange-light));
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--white);
+            background-color: var(--primary-orange);
+        }
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 15px;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        nav ul li a:hover,
+        nav ul li a.active {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--white);
+        }
+        .hero {
+            background: 
+                linear-gradient(135deg, rgba(255, 107, 40, 0.3), rgba(255,140,90,0.2)),
+                url('изображения/основная.jpg') center/cover no-repeat;
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(transparent, var(--cream));
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            color: var(--white);
+        }
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            font-weight: 500;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--white), #FFE8D6);
+            color: var(--primary-orange);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #FFFFFF, #FFFFFF);
+        }
+        .btn span:last-child {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .btn:hover span:last-child {
+            transform: translateX(5px);
+        }
+        .section {
+            padding: 80px 0;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--dark-brown);
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-orange), var(--orange-light));
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+        .about-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-text {
+            padding: 40px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow);
+            border: 1px solid rgba(255, 107, 53, 0.1);
+        }
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--medium-brown);
+        }
+
+        /* Слайдер интерьеров */
+        .interior-slider {
+            position: relative;
+            width: 100%;
+            min-width: 500px;
+            max-width: none;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px var(--shadow);
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            height: 850px;
+            background: var(--cream);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-orange);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-btn:hover {
+            background: var(--primary-orange);
+            color: var(--white);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-btn.prev {
+            left: 20px;
+        }
+
+        .slider-btn.next {
+            right: 20px;
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .dot.active {
+            background: var(--primary-orange);
+            transform: scale(1.2);
+            border-color: var(--primary-orange);
+        }
+
+        /* Большая галерея собак */
+        .dog-gallery-large {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .dog-photo-large {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(238, 210, 156, 0.4);
+            overflow: hidden;
+            text-align: center;
+            padding: 15px;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .dog-photo-large:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(238, 210, 156, 0.6);
+        }
+
+        .dog-photo-large::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,107,53,0.1), rgba(255,140,90,0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+        }
+
+        .dog-photo-large:hover::before {
+            opacity: 1;
+        }
+
+        .dog-photo-large img {
+  border-radius: 15px;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.fullscreen-modal.open .modal-image {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+        .dog-photo-large:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Кофейни */
+        .coffee-houses {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .coffee-house {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 107, 53, 0.1);
+        }
+        
+        .coffee-house:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--shadow-hover);
+        }
+        
+        .coffee-house-image {
+            height: 200px;
+            background-color: var(--cream);
+        }
+        
+        .coffee-house-content {
+            padding: 24px;
+        }
+        
+        .coffee-house-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark-brown);
+        }
+        
+        .coffee-house-address {
+            color: var(--medium-brown);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .coffee-house-hours {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--light-brown);
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Контакты */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--shadow-hover);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--orange-light), var(--primary-orange));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+        }
+        
+        .contact-details h3 {
+            margin-bottom: 4px;
+            color: var(--dark-brown);
+            font-size: 16px;
+        }
+        
+        .contact-details p {
+            color: var(--medium-brown);
+            font-size: 14px;
+        }
+        
+        .contact-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--warm-white);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-orange);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        /* Подвал */
+        footer {
+            background: var(--dark-brown);
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--accent-yellow);
+        }
+        
+        .footer-column p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary-orange);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: var(--primary-orange);
+            transform: scale(1.1);
+        }
+        
+        .social-link svg {
+            display: block;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Адаптивность */
+        @media (min-width: 1000px) {
+            .interior-slider {
+                max-width: 700px;
+            }
+            
+            .slides-container {
+                height: 500px;
+            }
+            
+            .dog-gallery-large {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            nav {
+                display: none;
+                width: 100%;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            .interior-slider {
+                max-width: 100%;
+            }
+            
+            .slides-container {
+                height: 300px;
+            }
+            
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .slider-btn.prev {
+                left: 10px;
+            }
+            
+            .slider-btn.next {
+                right: 10px;
+            }
+            
+            .dog-gallery-large {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .dog-photo-large img {
+                height: 140px;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .slides-container {
+                height: 700px;
+            }
+            
+            .dog-gallery-large {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .fullscreen-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; 
+    top: 0; 
+    right: 0; 
+    bottom: 0;
+    width: 100vw; 
+    height: 100vh;
+    background: rgba(30, 20, 5, 0.95);
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.fullscreen-modal.open {
+    display: flex;
+}
+
+
+.close-modal {
+    position: absolute;
+    top: 40px;
+    right: 55px;
+    font-size: 48px;
+    color: #fffcd0;
+    cursor: pointer;
+    z-index: 10000;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+}
+
+.close-modal:hover {
+    color: #ff6b35;
+}
+
+/* Адаптивность для модального окна */
+@media (max-width: 768px) {
+    .modal-image {
+        max-width: 95vw;
+        max-height: 80vh;
+    }
+    
+    .close-modal {
+        top: 20px;
+        right: 25px;
+        font-size: 36px;
+    }
+    
+    .fullscreen-modal button {
+        font-size: 40px !important;
+    }
+    
+    .fullscreen-modal button:first-of-type {
+        left: 20px !important;
+    }
+    
+    .fullscreen-modal button:last-of-type {
+        right: 20px !important;
+    }
+}
+
+#dog-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#dog-modal .modal-image {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  transition: opacity 0.2s ease;
+}
+#dog-modal .close-modal {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: #fffcd0;
+  cursor: pointer;
+}
+
+.site-footer {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: var(--dark-brown, #241C11);
+  padding: 34px 0 18px 0;
+  font-size: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-container.white-footer-line {
+  text-align: center;
+  color: var(--white, #fff);
+  font-weight: 400;
+  letter-spacing: .01em;
+  line-height: 1.6;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-nav-colored {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.footer-nav-colored a {
+  color: #e87e50; /* твой оранжевый */
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 17px;
+  transition: color 0.2s;
+}
+.footer-nav-colored a:hover {
+  color: #cc6235;
+}
+
+.modal-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary-orange); /* фирменный оранжевый */
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 2.4rem;
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+  cursor: pointer;
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.modal-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+.modal-nav-btn:hover,
+.modal-nav-btn:focus {
+  background: #E55A2B; /* чуть темнее на ховер */
+  color: #FFF9F0;
+}
+.modal-prev {
+  left: 30px;
+}
+.modal-next {
+  right: 30px;
+}
+.footer-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .footer-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-icon:hover {
+            background: var(--primary-orange);
+            transform: translateY(-3px);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="изображения/круглый логотип.png" alt="Бабушка Бобра">
+                </div>
+                <span class="logo-text">Кофейня Бабушка Бобра</span>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Главная</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="menu.html">Меню</a></li>
+                    <li><a href="#coffee-houses">Кофейни</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Главный баннер -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Кофейня Бабушки Бобра</h1>
+            <p>Уютное и теплое место, которое напомнит вам дом бабушки</p>
+            <a href="menu.html" class="btn">
+                <span>Посмотреть меню</span>
+                <span>→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- О нас -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">О нас</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        Кофейня названа в честь любимой бабушки основателя Игонина Ивана.<br>
+                        "Бобёр" — его юношеское прозвище.<br>
+                        Мы очень любим гостей — и двух-, и четырехлапых! У нас всегда рады хвостатым друзьям.<br>
+                        Ценим и любим наших близких!
+                    </p>
+                </div>
+                <div class="interior-slider">
+                    <div class="slides-container">
+                        <div class="slide active">
+                            <img src="изображения/о нас.jpg" alt="Интерьер 1">
+                        </div>
+                        <div class="slide">
+                            <img src="изображения/о нас2.jpg" alt="Интерьер 2">
+                        </div>
+                        <div class="slide">
+                            <img src="изображения/о нас3.jpg" alt="Интерьер 3">
+                        </div>
+                        <div class="slide">
+                            <img src="изображения/о нас4.jpg" alt="Интерьер 4">
+                        </div>
+                        <div class="slide">
+                            <img src="изображения/о нас5.webp" alt="Интерьер 5">
+                        </div>
+                        <div class="slide">
+                            <img src="изображения/о нас6.webp" alt="Интерьер 6">
+                        </div>
+                    </div>
+                    <button class="slider-btn prev">‹</button>
+                    <button class="slider-btn next">›</button>
+                    <div class="slider-dots"></div>
+                </div>
+            </div>
+            
+            <!-- Галерея собак -->
+            <h3 class="section-title" style="margin-top:50px;font-size:2rem;color:var(--primary-orange)">Наши хвостатые гости</h3>
+            <div class="dog-gallery-large">
+                <div class="dog-photo-large">
+                    <img src="изображения/собачка1.jpg" alt="Гость кофейни 1">
+                </div>
+                <div class="dog-photo-large">
+                    <img src="изображения/собачка2.jpg" alt="Гость кофейни 2">
+                </div>
+                <div class="dog-photo-large">
+                    <img src="изображения/собачка3.jpg" alt="Гость кофейни 3">
+                </div>
+                <div class="dog-photo-large">
+                    <img src="изображения/собачка4.jpg" alt="Гость кофейни 4">
+                </div>
+                <div class="dog-photo-large">
+                    <img src="изображения/собачка5.jpg" alt="Гость кофейни 5">
+                </div>
+                <div class="dog-photo-large">
+                    <img src="изображения/собачка6.jpg" alt="Гость кофейни 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модалка для собачек -->
+<div id="dog-modal" class="fullscreen-modal">
+  <span class="close-modal">&times;</span>
+  <img class="modal-image" alt="dog photo">
+</div>
+
+
+    <!-- Наши кофейни -->
+    <section class="section" id="coffee-houses">
+        <div class="container">
+            <h2 class="section-title">Наши кофейни</h2>
+            <div class="coffee-houses">
+                <div class="coffee-house">
+                    <div class="coffee-house-image">
+                        <iframe 
+                            src="https://yandex.ru/map-widget/v1/?ll=37.615587%2C55.737339&z=17&l=map&pt=37.615587,55.737339,pm2rdm" 
+                            width="100%" 
+                            height="200" 
+                            style="border:0;" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="coffee-house-content">
+                        <h3 class="coffee-house-title">Якиманка</h3>
+                        <div class="coffee-house-address">
+                            <span>📍</span> ул. Большая Якиманка, 19
+                        </div>
+                        <div class="coffee-house-hours">
+                            <span>Пн-Пт: 9:00-20:00</span>
+                            <span>Сб-Вс: 10:00-20:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="coffee-house">
+                    <div class="coffee-house-image">
+                        <iframe 
+                            src="https://yandex.ru/map-widget/v1/?ll=37.783383%2C55.751396&z=17&l=map&pt=37.783383,55.751396,pm2rdm" 
+                            width="100%" 
+                            height="200" 
+                            style="border:0;" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="coffee-house-content">
+                        <h3 class="coffee-house-title">Перово</h3>
+                        <div class="coffee-house-address">
+                            <span>📍</span> ул. 2-я Владимирская, 34
+                        </div>
+                        <div class="coffee-house-hours">
+                            <span>Пн-Пт: 8:00-20:00</span>
+                            <span>Сб-Вс: 10:00-20:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="coffee-house">
+                    <div class="coffee-house-image">
+                        <iframe 
+                            src="https://yandex.ru/map-widget/v1/?ll=37.784668%2C55.789026&z=17&l=map&pt=37.784668,55.789026,pm2rdm" 
+                            width="100%" 
+                            height="200" 
+                            style="border:0;" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="coffee-house-content">
+                        <h3 class="coffee-house-title">Измайлово</h3>
+                        <div class="coffee-house-address">
+                            <span>📍</span> 3-я Парковая ул., 4
+                        </div>
+                        <div class="coffee-house-hours">
+                            <span>Пн-Пт: 8:00-21:00</span>
+                            <span>Сб-Вс: 10:00-20:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ссылки на Яндекс.Карты -->
+    <div style="text-align: center; margin-top: 40px;">
+        <p>Читайте больше отзывов на Яндекс.Картах:</p>
+        <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin: 20px 0;">
+            <a href="https://yandex.ru/maps/org/babushka_bobra/30202138777/?ll=37.615587%2C55.737340&z=17.06/" target="_blank" class="btn" style="background-color: var(--accent-green); padding: 10px 20px;">Якиманка</a>
+            <a href="https://yandex.ru/maps/org/babushka_bobra/38979262588/?ll=37.783383%2C55.751396&z=17.06/" target="_blank" class="btn" style="background-color: var(--accent-green); padding: 10px 20px;">Перово</a>
+            <a href="https://yandex.ru/maps/org/babushka_bobra/189458741867/?ll=37.784668%2C55.789026&z=17.06/" target="_blank" class="btn" style="background-color: var(--accent-green); padding: 10px 20px;">Измайлово</a>
+        </div>
+    </div>
+
+    <!-- Контакты -->
+    <section class="section" id="contacts">
+        <div class="container">
+            <h2 class="section-title">Свяжитесь с нами</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h3>Телефон</h3>
+                            <p>+7 (965) 388-16-00</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>i.e.igonin@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🕒</div>
+                        <div class="contact-details">
+                            <h3>Часы работы</h3>
+                            <p>Пн-Пт: 8:00-21:00<br>Сб-Вс: 10:00-20:00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Ваше имя</label>
+                            <input type="text" id="name" class="form-control" placeholder="Иван Иванов">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="example@mail.ru">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Сообщение</label>
+                            <textarea id="message" class="form-control" rows="5" placeholder="Ваше сообщение..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">Отправить сообщение</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        ...   <!-- Контакты и другие секции заканчиваются здесь -->
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Весь твой footer-контент здесь (без дублирования!) -->
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модалка для интерьеров -->
+    <div id="interior-modal" class="fullscreen-modal">
+        <span class="close-modal">&times;</span>
+        <button class="modal-nav-btn modal-prev">&#8592;</button>
+<button class="modal-nav-btn modal-next">&#8594;</button>
+        <img class="modal-image" src="" alt="Интерьер кофейни">
+    </div>
+
+    <!-- Модалка для собак -->
+    <div id="dogs-modal" class="fullscreen-modal">
+        <span class="close-modal">&times;</span>
+<button class="modal-nav-btn modal-prev" aria-label="Предыдущее">
+  <svg width="24" height="24" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<button class="modal-nav-btn modal-next" aria-label="Следующее">
+  <svg width="24" height="24" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+        <img class="modal-image" src="" alt="Хвостатый гость">
+    </div>
+
+  <script>
+        // ====== ОТДЕЛЬНАЯ ГАЛЕРЕЯ ДЛЯ ИНТЕРЬЕРОВ ======
+        const interiorModal = document.getElementById('interior-modal');
+        const interiorModalImage = interiorModal.querySelector('.modal-image');
+        const interiorCloseBtn = interiorModal.querySelector('.close-modal');
+        const interiorPrevBtn = interiorModal.querySelector('.modal-prev');
+        const interiorNextBtn = interiorModal.querySelector('.modal-next');
+
+        // Только изображения интерьеров из слайдера
+        const interiorImages = [...document.querySelectorAll('.slides-container .slide img')];
+        let currentInteriorIndex = 0;
+
+        // Функции для интерьеров
+        function openInteriorModal(index) {
+            if (index < 0 || index >= interiorImages.length) return;
+            
+            currentInteriorIndex = index;
+            interiorModalImage.src = interiorImages[currentInteriorIndex].src;
+            interiorModalImage.alt = interiorImages[currentInteriorIndex].alt;
+            interiorModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeInteriorModal() {
+            interiorModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function showNextInterior() {
+            currentInteriorIndex = (currentInteriorIndex + 1) % interiorImages.length;
+            openInteriorModal(currentInteriorIndex);
+        }
+
+        function showPrevInterior() {
+            currentInteriorIndex = (currentInteriorIndex - 1 + interiorImages.length) % interiorImages.length;
+            openInteriorModal(currentInteriorIndex);
+        }
+
+        // Назначаем обработчики для интерьеров
+        interiorImages.forEach((img, index) => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => openInteriorModal(index));
+        });
+
+        interiorCloseBtn.addEventListener('click', closeInteriorModal);
+        interiorNextBtn.addEventListener('click', showNextInterior);
+        interiorPrevBtn.addEventListener('click', showPrevInterior);
+
+        interiorModal.addEventListener('click', (e) => {
+            if (e.target === interiorModal) {
+                closeInteriorModal();
+            }
+        });
+
+        // ====== ОТДЕЛЬНАЯ ГАЛЕРЕЯ ДЛЯ СОБАК ======
+        const dogsModal = document.getElementById('dogs-modal');
+        const dogsModalImage = dogsModal.querySelector('.modal-image');
+        const dogsCloseBtn = dogsModal.querySelector('.close-modal');
+        const dogsPrevBtn = dogsModal.querySelector('.modal-prev');
+        const dogsNextBtn = dogsModal.querySelector('.modal-next');
+
+        // Только изображения собак
+        const dogImages = [...document.querySelectorAll('.dog-gallery-large img')];
+        let currentDogIndex = 0;
+
+        // Функции для собак
+        function openDogsModal(index) {
+            if (index < 0 || index >= dogImages.length) return;
+            
+            currentDogIndex = index;
+            dogsModalImage.src = dogImages[currentDogIndex].src;
+            dogsModalImage.alt = dogImages[currentDogIndex].alt;
+            dogsModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDogsModal() {
+            dogsModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function showNextDog() {
+            currentDogIndex = (currentDogIndex + 1) % dogImages.length;
+            openDogsModal(currentDogIndex);
+        }
+
+        function showPrevDog() {
+            currentDogIndex = (currentDogIndex - 1 + dogImages.length) % dogImages.length;
+            openDogsModal(currentDogIndex);
+        }
+
+        // Назначаем обработчики для собак
+        dogImages.forEach((img, index) => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => openDogsModal(index));
+        });
+
+        dogsCloseBtn.addEventListener('click', closeDogsModal);
+        dogsNextBtn.addEventListener('click', showNextDog);
+        dogsPrevBtn.addEventListener('click', showPrevDog);
+
+        dogsModal.addEventListener('click', (e) => {
+            if (e.target === dogsModal) {
+                closeDogsModal();
+            }
+        });
+
+        // ====== ОБЩЕЕ УПРАВЛЕНИЕ С КЛАВИАТУРЫ ======
+        document.addEventListener('keydown', (e) => {
+            // Для интерьеров
+            if (interiorModal.classList.contains('open')) {
+                switch(e.key) {
+                    case 'Escape':
+                        closeInteriorModal();
+                        break;
+                    case 'ArrowRight':
+                        showNextInterior();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevInterior();
+                        break;
+                }
+            }
+            
+            // Для собак
+            if (dogsModal.classList.contains('open')) {
+                switch(e.key) {
+                    case 'Escape':
+                        closeDogsModal();
+                        break;
+                    case 'ArrowRight':
+                        showNextDog();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevDog();
+                        break;
+                }
+            }
+        });
+
+        // ====== СЛАЙДЕР "О НАС" ======
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.querySelector('.slider-dots');
+
+        // Создаем точки для слайдера
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+                updateDots();
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            slides.forEach((slide, idx) => {
+                slide.classList.toggle('active', idx === index);
+            });
+        }
+
+        function updateDots() {
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlide);
+            });
+        }
+
+        // Обработчики для кнопок слайдера
+        document.querySelector('.slider-btn.next').addEventListener('click', function() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+            updateDots();
+        });
+
+        document.querySelector('.slider-btn.prev').addEventListener('click', function() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+            updateDots();
+        });
+
+        // Автопереключение слайдов
+        let slideInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+            updateDots();
+        }, 5000);
+
+        // Останавливаем автопереключение при наведении
+        const sliderContainer = document.querySelector('.interior-slider');
+sliderContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
+sliderContainer.addEventListener('mouseleave', () => {
+    slideInterval = setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+        updateDots();
+    }, 5000);
+});
+
+        // ====== АДАПТИВНОЕ МЕНЮ ======
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Закрываем меню при клике на ссылку
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+    </script>
+
+
+<footer class="site-footer">
+        <div class="footer-container white-footer-line">
+            <div class="footer-icons">
+                <a href="https://t.me/babushkabobra" target="_blank" class="footer-icon" aria-label="Telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
+                <a href="https://vk.com/babushka.bobra" target="_blank" class="footer-icon" aria-label="VK">
+                    <i class="fab fa-vk"></i>
+                </a>
+                <a href="https://www.youtube.com/@babushkabobra" target="_blank" class="footer-icon" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            
+            © 2025 Кофейня "Бабушка Бобра". <br> Все права защищены.
+            
+            <nav class="footer-nav-colored">
+                <a href="menu.html">Меню</a>
+                <a href="#contacts">Контакты</a>
+                <a href="#coffee-houses">Кофейни</a>
+            </nav>
+        </div>
+    </footer>>
+
+<script>
+// === Слайд-шоу для интерьеров ===
+const interiorImages = [
+  'изображение/о нас.jpg',
+  'изображение/о нас2.jpg',
+  'изображение/о нас3.jpg',
+  'изображение/о нас4.jpg',
+  'изображение/о нас5.jpg',
+  'изображение/о нас6.jpg'
+];
+
+let currentInteriorIndex = 0;
+const interiorModal = document.getElementById('interiorModal');
+const interiorModalImg = document.getElementById('interiorModalImg');
+const interiorThumbnails = document.querySelectorAll('.interior-slider img');
+
+// Открытие картинки
+interiorThumbnails.forEach((thumb, index) => {
+  thumb.addEventListener('click', () => {
+    currentInteriorIndex = index;
+    openInteriorModal();
+  });
+});
+
+function openInteriorModal() {
+  interiorModal.style.display = 'flex';
+  interiorModalImg.src = interiorImages[currentInteriorIndex];
+}
+
+document.getElementById('interiorModalClose').onclick = () => {
+  interiorModal.style.display = 'none';
+};
+
+// Переключение стрелками клавиатуры
+document.addEventListener('keydown', (e) => {
+  if (interiorModal.style.display === 'flex') {
+    if (e.key === 'ArrowRight') {
+      currentInteriorIndex = (currentInteriorIndex + 1) % interiorImages.length;
+      interiorModalImg.src = interiorImages[currentInteriorIndex];
+    } else if (e.key === 'ArrowLeft') {
+      currentInteriorIndex = (currentInteriorIndex - 1 + interiorImages.length) % interiorImages.length;
+      interiorModalImg.src = interiorImages[currentInteriorIndex];
+    } else if (e.key === 'Escape') {
+      interiorModal.style.display = 'none';
+    }
+  }
+});
+
+// === Слайд-шоу для хвостатых гостей ===
+const dogsImages = [
+  'dog1.jpg',
+  'dog2.jpg',
+  'dog3.jpg',
+  'dog4.jpg',
+  'dog5.jpg',
+  'dog6.jpg',
+  'dog7.jpg',
+  'dog8.jpg'
+];
+
+const dogsModal = document.getElementById('dogs-modal');
+const dogsModalImage = dogsModal.querySelector('.modal-image');
+const dogsCloseBtn = dogsModal.querySelector('.close-modal');
+const dogsPrevBtn = dogsModal.querySelector('.modal-prev');
+const dogsNextBtn = dogsModal.querySelector('.modal-next');
+const dogImages = document.querySelectorAll('.dog-gallery-large img');
+let currentDogIndex = 0;
+
+function openDogsModal(index) {
+  if (index < 0) index = dogImages.length - 1;
+  if (index >= dogImages.length) index = 0;
+  currentDogIndex = index;
+  dogsModalImage.src = dogImages[currentDogIndex].src;
+  dogsModalImage.alt = dogImages[currentDogIndex].alt;
+  dogsModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDogsModal() {
+  dogsModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function showNextDog() {
+  currentDogIndex = (currentDogIndex + 1) % dogImages.length;
+  openDogsModal(currentDogIndex);
+}
+
+function showPrevDog() {
+  currentDogIndex = (currentDogIndex - 1 + dogImages.length) % dogImages.length;
+  openDogsModal(currentDogIndex);
+}
+
+dogImages.forEach((img, index) => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', () => openDogsModal(index));
+});
+
+dogsCloseBtn.addEventListener('click', closeDogsModal);
+dogsNextBtn.addEventListener('click', showNextDog);
+dogsPrevBtn.addEventListener('click', showPrevDog);
+
+dogsModal.addEventListener('click', (e) => {
+  if (e.target === dogsModal) closeDogsModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (dogsModal.classList.contains('open')) {
+    switch (e.key) {
+      case 'Escape':
+        closeDogsModal();
+        break;
+      case 'ArrowRight':
+        showNextDog();
+        break;
+      case 'ArrowLeft':
+        showPrevDog();
+        break;
+    }
+  }
+});
+</script>
+
+</body>
+</html>
